@@ -335,7 +335,7 @@
             <img src="12.png" alt="Ужин" class="program-icon">
             </div>
             <div class="program-content">
-            <h3 class="program-title">ВЫЕЗДНАЯ ЦЕРЕМОНИЯ БРАКОСОЧЕТАНИЯ</h3>
+            <h3 class="program-title">ВЫЕЗДНАЯ ЦЕРЕМОНИЯ</h3>
             <div class="program-time">16:00</div>
             </div>
         </div>
@@ -465,21 +465,32 @@
                             <option value="" disabled selected>Количество гостей</option>
                             <option value="1">1 (только я)</option>
                             <option value="2">2 (я + партнёр)</option>
-                            <option value="3">3 (я + 2 гостя)</option>
-                            <option value="4">4 (я + 3 гостя)</option>
+                            <!-- <option value="3">3 (я + 2 гостя)</option>
+                            <option value="4">4 (я + 3 гостя)</option> -->
                         </select>
                     </div>
 
                     <!-- НОВОЕ ПОЛЕ: Предпочтение по алкоголю -->
+                    <!-- НОВОЕ ПОЛЕ: Предпочтения по алкоголю (МНОЖЕСТВЕННЫЙ ВЫБОР) -->
                     <div class="form-group">
-                        <select class="form-input form-select" id="alcohol">
-                            <option value="" disabled selected>Предпочтение по алкоголю</option>
-                            <option value="champagne">Шампанское</option>
-                            <option value="red_wine">Красное вино</option>
-                            <option value="whiskey">Виски</option>
-                            <option value="vodka">Водка</option>
-                            <option value="non_alcoholic">Безалкогольные напитки</option>
-                        </select>
+                        <label style="display: block; margin-bottom: 12px; font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: #5c151b;">Предпочтения по алкоголю (можно выбрать несколько)</label>
+                        <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" name="alcohol" value="champagne" style="width: 18px; height: 18px; cursor: pointer;"> Шампанское
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" name="alcohol" value="red_wine" style="width: 18px; height: 18px; cursor: pointer;"> Красное вино
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" name="alcohol" value="whiskey" style="width: 18px; height: 18px; cursor: pointer;"> Виски
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" name="alcohol" value="vodka" style="width: 18px; height: 18px; cursor: pointer;"> Водка
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" name="alcohol" value="non_alcoholic" style="width: 18px; height: 18px; cursor: pointer;"> Безалкогольные напитки
+                            </label>
+                        </div>
                     </div>
 
                     <!-- НОВОЕ ПОЛЕ: Аллергические реакции -->
@@ -519,8 +530,8 @@
         </div> -->
         
         <p class="footer-text">
-            С любовью, Андрей и Диана:<br>
-            <span class="footer-contact"></span><br>
+            Если у Вас остались какие либо вопросы, пишите или звоните:<br>
+            <span class="footer-contact">+7 (982) 126-06-09</span><br>
         </p>
     </div>
 </footer>
