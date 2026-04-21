@@ -1,4 +1,4 @@
-// Скрипт для свадебного сайта Иван & Юлия
+// Скрипт для свадебного сайта Андрей & Диана
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Свадебный сайт загружен');
     
@@ -252,9 +252,8 @@ function showLoadingModal() {
 }
 
 // ========== GOOGLE SHEETS ==========
-const SCRIPT_URL = 'https://script.google.com/macros/s/ASVRMO79_7oFQ4D5moyj9rx/exec'; // ЗАМЕНИТЕ НА ВАШ URL
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxKU_r7GeIhShKcVGpkLsY-Xr-eu2_eMC-PfEUmgIOQLFrZLZZiSTcPwwQHCYO-D98q/exec'; // ЗАМЕНИТЕ НА ВАШ URL
 
-// Инициализация формы RSVP
 // Инициализация формы RSVP
 function initRSVPForm() {
     const rsvpForm = document.querySelector('.rsvp-form');
@@ -268,16 +267,20 @@ function initRSVPForm() {
         
         // Получаем данные
         const nameInput = this.querySelector('input[type="text"]');
-        const guestsSelect = this.querySelector('#guests');
-        const alcoholSelect = this.querySelector('#alcohol');
+        const guestsSelect = this.querySelector('.form-select');
         const allergyInput = this.querySelector('#allergy');
         const attendanceRadio = this.querySelector('input[name="attendance"]:checked');
         
         const name = nameInput ? nameInput.value.trim() : '';
         const guests = guestsSelect ? guestsSelect.value : '1';
-        const alcohol = alcoholSelect ? alcoholSelect.value : '';
         const allergy = allergyInput ? allergyInput.value.trim() : '';
         const attendance = attendanceRadio ? attendanceRadio.value : null;
+        
+        // Собираем выбранные алкогольные предпочтения (несколько чекбоксов)
+        let alcoholValues = [];
+        document.querySelectorAll('input[name="alcohol"]:checked').forEach(checkbox => {
+            alcoholValues.push(checkbox.value);
+        });
         
         // Валидация
         if (!name) {
@@ -302,9 +305,12 @@ function initRSVPForm() {
             const formDataToSend = new URLSearchParams();
             formDataToSend.append('name', name);
             formDataToSend.append('guests', guests);
-            formDataToSend.append('alcohol', alcohol);
             formDataToSend.append('allergy', allergy);
             formDataToSend.append('attendance', attendance);
+            
+            for (const alcohol of alcoholValues) {
+                formDataToSend.append('alcohol', alcohol);
+            }
             
             const response = await fetch(SCRIPT_URL, {
                 method: 'POST',
@@ -332,6 +338,8 @@ function initRSVPForm() {
                 }
                 // Очищаем форму
                 rsvpForm.reset();
+                // Сбрасываем чекбоксы
+                document.querySelectorAll('input[name="alcohol"]').forEach(cb => cb.checked = false);
             } else {
                 throw new Error(result.message || 'Ошибка отправки');
             }
@@ -348,55 +356,3 @@ function initRSVPForm() {
         }
     });
 }
-
-// Исправление для мобильного viewport - использование CSS dvh вместо JS
-// function setMobileHeroHeight() {
-//     const hero = document.querySelector('.hero');
-//     if (!hero) return;
-    
-//     // Используем CSS переменную для поддержки старых браузеров
-//     const vh = window.innerHeight * 0.01;
-//     document.documentElement.style.setProperty('--vh', `${vh}px`);
-    
-//     // Для старых браузеров, которые не поддерживают dvh
-//     if (!CSS.supports('height', '100dvh')) {
-//         hero.style.height = `${window.innerHeight}px`;
-//         hero.style.minHeight = `${window.innerHeight}px`;
-//     }
-// }
-
-// Устанавливаем начальную высоту
-// setMobileHeroHeight();
-
-// Слушаем только событие resize, но с debounce
-// let resizeTimeout;
-// window.addEventListener('resize', function() {
-//     clearTimeout(resizeTimeout);
-//     resizeTimeout = setTimeout(setMobileHeroHeight, 100);
-// });
-
-// // Слушаем orientationchange
-// window.addEventListener('orientationchange', function() {
-//     setTimeout(setMobileHeroHeight, 50);
-// });
-
-// Также слушаем scroll, чтобы корректировать при скрытии/показе адресной строки
-// let ticking = false;
-// window.addEventListener('scroll', function() {
-//     if (!ticking) {
-//         requestAnimationFrame(function() {
-//             // Обновляем только если сильно изменилась высота
-//             const currentHeight = window.innerHeight;
-//             const hero = document.querySelector('.hero');
-//             if (hero && Math.abs(hero.offsetHeight - currentHeight) > 50) {
-//                 setMobileHeroHeight();
-//             }
-//             ticking = false;
-//         });
-//         ticking = true;
-//     }
-// });
-
-// setMobileHeroHeight();
-// window.addEventListener('resize', setMobileHeroHeight);
-// window.addEventListener('orientationchange', () => setTimeout(setMobileHeroHeight, 100));
